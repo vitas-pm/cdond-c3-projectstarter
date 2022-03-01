@@ -165,7 +165,7 @@ jobs:
 
   configure-infrastructure:
     docker:
-      - image: python:3.7-node
+      - image: cimg/python:3.7-node
     steps:
       - checkout
       - add_ssh_keys:
@@ -249,7 +249,7 @@ jobs:
 
   deploy-backend:
     docker:
-      - image: python:3.7-node
+      - image: cimg/python:3.7-node
     steps:
       - checkout
       - add_ssh_keys:
