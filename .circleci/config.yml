@@ -174,7 +174,7 @@ jobs:
           at: ~/
       - run:
           name: Install aws cli
-          command:
+          command: |
             sudo apt-get update
             sudo apt-get install awscli
       - run:
@@ -227,7 +227,10 @@ jobs:
       - run:
           name: Install dependencies
           command: |
-            # your code here
+            apt-get update
+            apt-get install curl
+            curl -sL https://deb.nodesource.com/setup_13.x | bash
+            apt-get install nodejs
       - run:
           name: Get backend url
           command: |
@@ -258,7 +261,7 @@ jobs:
           at: ~/
       - run:
           name: Install aws cli
-          command:
+          command: |
             sudo apt-get update
             sudo apt-get install awscli
       - run:
