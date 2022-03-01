@@ -7,7 +7,7 @@
 
 - name: Copy the backend zip
   template:
-    src: "backend/artifact.tar.gz"
+    src: "files/artifact.tar.gz"
     dest: "~/backend/artifact.tar.gz"
 
 - name: unpack backend zip
