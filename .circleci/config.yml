@@ -29,7 +29,7 @@ commands:
             then
               cd backend
               npm install
-              npm run migration:revert
+              npm run migrations:revert
             fi
 
 jobs:
@@ -276,28 +276,17 @@ jobs:
       - run:
           name: Deploy backend
           command: |
-            pwd
             cd backend
-            pwd
             npm i
-            pwd
             npm run build
-            pwd
-            cd ..
             # Zip the directory
-            pwd
-            tar -C backend -czvf artifact.tar.gz .
-            pwd
+            tar -czvf artifact.tar.gz .
+            cd ..
             mkdir .circleci/ansible/roles/deploy/files
-            pwd
-            cp artifact.tar.gz .circleci/ansible/roles/deploy/files
-            pwd
+            cp backend/artifact.tar.gz .circleci/ansible/roles/deploy/files
             cd .circleci/ansible
-            pwd
             echo "Contents  of the inventory.txt file is -------"
-            pwd
             cat inventory.txt
-            pwd
             ansible-playbook -i inventory.txt deploy-backend.yml
       - destroy-environment
       - revert-migrations

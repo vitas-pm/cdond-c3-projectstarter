@@ -6,7 +6,7 @@
     state: directory
 
 - name: Copy the backend zip
-  template:
+  copy:
     src: "files/artifact.tar.gz"
     dest: "~/project/backend/artifact.tar.gz"
 
