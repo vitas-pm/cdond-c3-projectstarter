@@ -13,15 +13,21 @@
 - name: unpack backend zip
   become: yes
   shell: |
-    cd ~/project/backend
+    cd project
+    cd backend
+    ls
     tar -xzvf artifact.tar.gz
+    ls
     rm -f artifact.tar.gz
+    ls
 
 - name: start backend
   become: yes
   shell: |
-    cd ~/project/backend
+    cd project
+    cd backend
     npm install
-    pm2 stop default
+    ls
+    # pm2 stop default
     pm2 start npm -- start
 
