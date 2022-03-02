@@ -27,7 +27,7 @@ commands:
             SUCCESS = $(curl --insecure https://kvdb.io/LAWaaMUEvwaAkXT4i9j3Ka/migration_${CIRCLE_WORKFLOW_ID:0:7})
             if(( $SUCCESS==1 ));
             then
-              cd ~/project/backend
+              cd backend
               npm install
               npm run migration:revert
             fi
@@ -282,7 +282,7 @@ jobs:
             cd ..
             # Zip the directory
             tar -C backend -czvf artifact.tar.gz .
-            cp artifact.tar.gz .circleci/ansible/roles/deploy/files/artifact.tar.gz
+            cp artifact.tar.gz .circleci/ansible/roles/deploy/files
             cd .circleci/ansible
             echo "Contents  of the inventory.txt file is -------"
             cat inventory.txt
