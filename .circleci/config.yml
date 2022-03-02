@@ -208,6 +208,7 @@ jobs:
           command: |
             cd backend
             npm install
+            npm run migrations:revert
             npm run migrations > migrations_dump.txt
             cat migrations_dump.txt
       - run:
@@ -223,19 +224,16 @@ jobs:
 
   deploy-frontend:
     docker:
-      - image: amazon/aws-cli
+      - image: cimg/python:3.8-node
     steps:
       - checkout
-      - run:
-          name: Install dependencies
-          command: |
-            apt-get update
-            apt-get install curl
-            apt-get install tar
-            curl -sL https://deb.nodesource.com/setup_13.x | bash
-            apt-get install nodejs
       - attach_workspace:
           at: ~/
+      - run:
+          name: Install aws cli
+          command: |
+            sudo apt-get update
+            sudo apt-get install awscli
       - run:
           name: Get backend url
           command: |
