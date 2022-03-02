@@ -305,7 +305,7 @@ jobs:
       - run:
           name: Get backend url
           command: |
-            export BACKEND_IP=$(tail -1 "project/.circleci/ansible/inventory.txt")
+            export BACKEND_IP=$(tail -1 "inventory.txt")
             echo "${BACKEND_IP}"
       - run:
           name: Backend smoke test.
