@@ -2,25 +2,25 @@
 
 - name: Creates backend directory
   file:
-    path: ~/backend
+    path: ~/project/backend
     state: directory
 
 - name: Copy the backend zip
   template:
     src: "files/artifact.tar.gz"
-    dest: "~/backend/artifact.tar.gz"
+    dest: "~/project/backend/artifact.tar.gz"
 
 - name: unpack backend zip
   become: yes
   shell: |
-    cd backend
+    cd ~/project/backend
     tar -xzvf artifact.tar.gz
     rm -f artifact.tar.gz
 
 - name: start backend
   become: yes
   shell: |
-    cd backend
+    cd ~/project/backend
     npm install
     pm2 stop default
     pm2 start npm -- start
