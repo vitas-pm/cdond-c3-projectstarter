@@ -293,25 +293,25 @@ jobs:
 
   smoke-test:
     docker:
-      - image: python:3.7-alpine3.11
+      - image: cimg/python:3.8-node
     steps:
       # Checkout code from git
       - run:
           name: Install dependencies
           command: |
-            apk add --update curl
+            sudo apt-get update
+            sudo apt-get install awscli
       - attach_workspace:
           at: ~/
       - run:
           name: Get backend url
           command: |
-            ls
-            pwd
             export BACKEND_IP=$(tail -1 ".circleci/ansible/inventory.txt")
             echo "${BACKEND_IP}"
       - run:
           name: Backend smoke test.
           command: |
+            export BACKEND_IP=$(tail -1 ".circleci/ansible/inventory.txt")
             export API_URL="http://${BACKEND_IP}:3030"
             echo "${API_URL}"
             if curl "${API_URL}/api/status" | grep "ok"
