@@ -24,7 +24,7 @@ commands:
           when: on_fail
           command: |
             # Curl command here to see if there was a successful migration associated with the workflow id, store result in SUCCESS variable
-            SUCCESS = $(curl --insecure https://kvdb.io/LAWaaMUEvwaAkXT4i9j3Ka/migration_${CIRCLE_WORKFLOW_ID:0:7})
+            SUCCESS=$(curl -s --insecure https://kvdb.io/LAWaaMUEvwaAkXT4i9j3Ka/migration_${CIRCLE_WORKFLOW_ID:0:7})
             if(( $SUCCESS==1 ));
             then
               cd backend
@@ -276,17 +276,28 @@ jobs:
       - run:
           name: Deploy backend
           command: |
+            pwd
             cd backend
+            pwd
             npm i
+            pwd
             npm run build
+            pwd
             cd ..
             # Zip the directory
+            pwd
             tar -C backend -czvf artifact.tar.gz .
+            pwd
             mkdir .circleci/ansible/roles/deploy/files
+            pwd
             cp artifact.tar.gz .circleci/ansible/roles/deploy/files
+            pwd
             cd .circleci/ansible
+            pwd
             echo "Contents  of the inventory.txt file is -------"
+            pwd
             cat inventory.txt
+            pwd
             ansible-playbook -i inventory.txt deploy-backend.yml
       - destroy-environment
       - revert-migrations
