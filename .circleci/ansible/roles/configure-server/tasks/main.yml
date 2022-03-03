@@ -1,31 +1,32 @@
 ---
 
 - name: "update apt packages."
-  become: yes
+  become: true
   apt:
     update_cache: yes
 
 - name: "upgrade packages"
-  become: yes
+  become: true
   apt:
     upgrade: yes
 
-
-- name: remove dependencies that are no longer required
-  become: yes
-  apt:
-    autoremove: yes
+#- name: "install dependencies."
+#  become: true
+#  shell: |
+#    curl -sL https://deb.nodesource.com/setup_14.x -o nodesource_setup.sh
+#    sudo bash nodesource_setup.sh
+#    sudo apt install nodejs
+#    node -v
 
 - name: "install dependencies."
-  become: yes
-  shell: |
-    curl -sL https://deb.nodesource.com/setup_14.x -o nodesource_setup.sh
-    sudo bash nodesource_setup.sh
-    sudo apt install nodejs
-    node -v
+  become: true
+  apt:
+    name: ["nodejs", "npm"]
+    state: latest
+    update_cache: yes
 
 - name: "install pm2"
-  become: yes
+  become: true
   npm:
     name: pm2
     global: yes
