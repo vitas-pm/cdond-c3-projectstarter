@@ -237,7 +237,7 @@ jobs:
       - run:
           name: Get backend url
           command: |
-            export BACKEND_IP=$(aws ec2 describe-instances --query 'Reservations[*].Instances[*].PublicIpAddress' --output=text)
+            export BACKEND_IP=$(tail -1 ".circleci/ansible/inventory.txt")
             export API_URL="http://${BACKEND_IP}:3030"
             echo "API_URL = ${API_URL}"
             echo API_URL="http://${BACKEND_IP}:3030" >> frontend/.env
@@ -270,21 +270,21 @@ jobs:
           name: Install aws cli
           command: |
             pip install awscli
-#      - run:
-#          name: make env file
-#          command: |
-#            cd backend
-#            echo ENVIROMENT=production > .env
-#            echo TYPEORM_CONNECTION=$TYPEORM_CONNECTION >> .env
-#            echo TYPEORM_MIGRATIONS_DIR=$TYPEORM_MIGRATIONS_DIR >> .env
-#            echo TYPEORM_ENTITIES=$TYPEORM_ENTITIES >> .env
-#            echo TYPEORM_MIGRATIONS=$TYPEORM_MIGRATIONS >> .env
-#            echo TYPEORM_HOST=$TYPEORM_HOST >> .env
-#            echo TYPEORM_PORT=$TYPEORM_PORT >> .env
-#            echo TYPEORM_USERNAME=$TYPEORM_USERNAME >> .env
-#            echo TYPEORM_PASSWORD=$TYPEORM_PASSWORD >> .env
-#            echo TYPEORM_DATABASE=$TYPEORM_DATABASE >> .env
-#            cat .env
+      - run:
+          name: make env file
+          command: |
+            cd backend
+            echo ENVIROMENT=production > .env
+            echo TYPEORM_CONNECTION=$TYPEORM_CONNECTION >> .env
+            echo TYPEORM_MIGRATIONS_DIR=$TYPEORM_MIGRATIONS_DIR >> .env
+            echo TYPEORM_ENTITIES=$TYPEORM_ENTITIES >> .env
+            echo TYPEORM_MIGRATIONS=$TYPEORM_MIGRATIONS >> .env
+            echo TYPEORM_HOST=$TYPEORM_HOST >> .env
+            echo TYPEORM_PORT=$TYPEORM_PORT >> .env
+            echo TYPEORM_USERNAME=$TYPEORM_USERNAME >> .env
+            echo TYPEORM_PASSWORD=$TYPEORM_PASSWORD >> .env
+            echo TYPEORM_DATABASE=$TYPEORM_DATABASE >> .env
+            cat .env
       - run:
           name: Deploy backend
           command: |
@@ -305,14 +305,17 @@ jobs:
 
   smoke-test:
     docker:
-      - image: cimg/python:3.8-node
+      - image: python:3.7-alpine3.11
     steps:
-      # Checkout code from git
+      - checkout
       - run:
           name: Install dependencies
           command: |
-            sudo apt-get update
-            sudo apt-get install awscli
+            apk add --update tar gzip nodejs npm curl
+      - run:
+          name: Install aws cli
+          command: |
+            pip install awscli
       - attach_workspace:
           at: ~/
       - run:
