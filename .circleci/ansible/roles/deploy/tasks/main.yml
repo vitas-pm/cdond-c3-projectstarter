@@ -2,18 +2,17 @@
 
 - name: Creates backend directory
   file:
-    path: ~/project/backend
+    path: ~/backend
     state: directory
 
 - name: Copy the backend zip
   copy:
     src: "files/artifact.tar.gz"
-    dest: "~/project/backend/artifact.tar.gz"
+    dest: "~/backend/artifact.tar.gz"
 
 - name: unpack backend zip
   become: yes
   shell: |
-    cd project
     cd backend
     tar -xzvf artifact.tar.gz
     rm -f artifact.tar.gz
@@ -21,14 +20,12 @@
 - name: start backend
   become: yes
   shell: |
-    cd project
     cd backend
     sudo npm install --quiet
-    sudo npm install --only=dev
-    sudo npm run build
-    sudo npm run prestart:prod
-    # pm2 stop default
-    sudo pm2 start npm --name backend -- start
-    cd dist
-    sudo pm2 start main.js
+    #sudo npm run build
+    #sudo npm run prestart:prod
+    sudo pm2 stop default
+    sudo pm2 start npm -- start
+    #cd dist
+    #sudo pm2 start main.js
 
