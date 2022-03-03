@@ -23,11 +23,12 @@
   shell: |
     cd project
     cd backend
-    npm install --quiet
-    npm run build
-    npm run prestart:prod
-    pm2 stop default
-    pm2 start npm --name backend -- start
+    sudo npm install --quiet
+    sudo npm install --only=dev
+    sudo npm run build
+    sudo npm run prestart:prod
+    # pm2 stop default
+    sudo pm2 start npm --name backend -- start
     cd dist
-    pm2 start main.js
+    sudo pm2 start main.js
 
