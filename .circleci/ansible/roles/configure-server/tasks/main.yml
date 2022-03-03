@@ -10,14 +10,6 @@
   apt:
     upgrade: yes
 
-#- name: "install dependencies."
-#  become: true
-#  shell: |
-#    curl -sL https://deb.nodesource.com/setup_14.x -o nodesource_setup.sh
-#    sudo bash nodesource_setup.sh
-#    sudo apt install nodejs
-#    node -v
-
 - name: "install dependencies."
   become: true
   apt:
