@@ -1,0 +1,5 @@
+URL1: https://github.com/vitas-pm/cdond-c3-projectstarter
+URL2: http://udapeople-be3533d.s3-website-us-east-1.amazonaws.com
+URL3: https://d1ar94scoxb2eg.cloudfront.net
+URL4: http://ec2-3-95-227-255.compute-1.amazonaws.com:3030/api/status
+URL5: http://ec2-54-236-229-82.compute-1.amazonaws.com:9090
